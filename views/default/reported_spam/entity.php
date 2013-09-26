@@ -29,9 +29,20 @@ $params = array(
 			)),
 		'tags' => false,
 		'subtitle' => $author_text . ' ' . $date,
-		'content' => elgg_get_excerpt($description)
+		'content' => elgg_get_excerpt($description, 500)
 	);
 
 $summary = elgg_view('object/elements/summary', $params);
 
-echo elgg_view_image_block(elgg_view_entity_icon($owner, 'small'), $summary);
+
+// display who reported this
+$reporters = '';
+$annotations = $entity->getAnnotations('community_spam_report', false);
+foreach ($annotations as $a) {
+	$a_owner = get_user($a->owner_guid);
+	$reporters .= elgg_view_entity_icon($a_owner, 'small');
+}
+
+$body = $summary . '<br>' . elgg_echo('community_spam_tools:reportedby', array($reporters)) . '<br><br>';
+
+echo elgg_view_image_block(elgg_view_entity_icon($owner, 'small'), $body);

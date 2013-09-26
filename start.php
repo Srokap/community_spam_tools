@@ -35,6 +35,7 @@ function community_spam_init() {
 		elgg_register_action('report_spam', dirname(__FILE__) . '/actions/report_spam.php');
 		elgg_register_action('reported_spam/delete', dirname(__FILE__) . '/actions/delete.php', 'admin');
 		elgg_register_action('reported_spam/notspam', dirname(__FILE__) . '/actions/notspam.php', 'admin');
+		elgg_register_admin_menu_item('administer', 'reported_spam', 'administer_utilities');
 	}
 }
 
